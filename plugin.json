@@ -1,0 +1,44 @@
+{
+    "name": "SACKeyManager",
+    "author": "椽承设计",
+    "url": "https://github.com/leolee9086/SACKeyManager",
+    "version": "0.3.4",
+    "minAppVersion": "3.0.0",
+    "backends": [
+      "windows"
+    ],
+    "frontends":[
+      "desktop", 
+      "browser-desktop"
+    ],
+    "displayName": {
+      "default": "SACKeyManager",
+      "zh_CN": "SAC配置管理器"
+    },
+    "description": {
+      "default": "",
+      "zh_CN": "模型key管理工具,用于简单管理模型大模型的key"
+    },
+    "readme": {
+      "default": "README.md",
+      "zh_CN": "README_zh_CN.md"
+    },
+    "funding": {
+      "openCollective": "",
+      "patreon": "",
+      "github": "",
+      "custom": [
+        "https://ld246.com/sponsor"
+      ]
+    },
+
+    "keywords": [
+      "apikey",
+      "ai",
+      "配置",
+      "管理",
+      "SAC",
+      "椽承设计"
+    ]
+  }
+  
