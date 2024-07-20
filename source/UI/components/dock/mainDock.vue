@@ -72,6 +72,7 @@ import { inject, onMounted, ref } from 'vue'
 import { readDir, readFile } from '/plugins/SACKeyManager/source/polyfills/fs.js';
 import { plugin, clientApi, kernelApi } from 'runtime'
 let currentAIConfigName = ref('')
+console.log(clientApi)
 const configs = plugin.data.configs
 const dateNowChina = () => {
     return new Date().toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\/|:|\s|,/g, '-')
