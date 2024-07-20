@@ -31,7 +31,7 @@
                 <label class="fn__flex b3-label">
                     <div class="fn__flex-1">
                         {{ configItem.name }}
-                        <div class="b3-label__text">{{ configItem.describes || '这个设置没有说明' }}</div>
+                        <div class="b3-label__text">{{ plugin.data.configs.savedDescribes[configItem.name].useAge || '这个设置没有说明' }}</div>
                         <div class="b3-label__text">{{ configItem.value.apiProvider }}</div>
 
                     </div>
@@ -93,7 +93,6 @@ const saveCurrentConfig =  () => {
 
             }
         )
-
     } else {
         clientApi.confirm('已经存在一模一样或者重名的配置啦', '如果你一定要保存就保存吧', async () => {
             configs.savedConfigs.push(

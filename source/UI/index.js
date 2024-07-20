@@ -40,7 +40,6 @@ const initConfigTab=(tab)=>{
 }
 
 plugin.eventBus.on('config-tab-inited', (e) => {
-    console.log(e.detail)
     initConfigTab(e.detail.tab)
 })
 Object.keys(plugin.getOpenedTab()).forEach(

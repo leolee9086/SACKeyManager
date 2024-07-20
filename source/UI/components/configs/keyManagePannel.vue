@@ -12,7 +12,7 @@
                 用途描述
                 <div class="b3-label__text">可以用来简单描述一下这个配置的功能</div>
                 <span class="fn__hr"></span>
-                <input v-model="configItem.describes" class="b3-text-field fn__block" id="apiModel" >
+                <input v-model="plugin.data.configs.savedDescribes[configItem.name].useAge" class="b3-text-field fn__block" id="apiModel" >
 
             </div>
         </div>

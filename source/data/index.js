@@ -1,16 +1,32 @@
 import { plugin } from '../asyncModules.js'
 import { reactive, watch } from '../../static/vue.esm-browser.js'
-import { readDir, readFile } from '../polyfills/fs.js'
+import { readDir, readFile, readFileSync } from '../polyfills/fs.js'
 const savedConfigs = await readDir(plugin.插件自身数据存储路径)
 const configs = reactive({
     currentAIConfig: globalThis.siyuan.config.ai.openAI,
-    savedConfigs: []
+    savedConfigs: [],
+    savedDescribes: {},
 })
 
 if (savedConfigs) {
+    let describes = savedConfigs.find(
+        item => {
+            return item.name === "describes"
+        }
+    )
+    if (describes) {
+        try {
+            configs.savedDescribes = JSON.parse(readFileSync(plugin.插件自身数据存储路径 + '/' + describes.name)) || {}
+        } catch (e) {
+            console.warn("元数据读取失败", e)
+        }
+    }
     savedConfigs.forEach(async item => {
-        let data = await readFile(plugin.插件自身数据存储路径 + '/' + item.name)
-        configs.savedConfigs.push({ name: item.name, value: JSON.parse(data) })
+        if (item.name !== 'describes') {
+            let data = await readFile(plugin.插件自身数据存储路径 + '/' + item.name)
+            configs.savedConfigs.push({ name: item.name, value: JSON.parse(data) })
+            configs.savedDescribes[item.name]=configs.savedDescribes[item.name]||{}
+        }
     }
     )
 }
@@ -28,10 +44,13 @@ watch(() => JSON.stringify(configs.savedConfigs), (newConfigs, oldConfigs) => {
         await plugin.removeData(item.name);
     });
 }, { deep: true });
+watch(() => JSON.stringify(configs.savedDescribes), async () => {
+    await plugin.saveData("describes", JSON.stringify(configs.savedDescribes));
 
+})
 watch(() => configs.savedConfigs.map(config => JSON.stringify(config)), (newConfigs, oldConfigs) => {
     newConfigs.forEach(async (newConfig, index) => {
-        if (newConfig !== JSON.stringify(oldConfigs[index])) {
+        if (!oldConfigs[index] || newConfig !== JSON.parse(JSON.stringify(oldConfigs[index]))) {
             await plugin.saveData(configs.savedConfigs[index].name, configs.savedConfigs[index].value);
         }
     });
