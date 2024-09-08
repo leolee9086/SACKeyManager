@@ -86,6 +86,7 @@ const copyConfig =  (configItem) => {
 }
 const saveCurrentConfig =  () => {
     if (currentAIConfigName.value && !compareConfig(globalThis.siyuan.config.ai.openAI)) {
+        configs.savedDescribes[currentAIConfigName.value]={useAge:""}
         configs.savedConfigs.push(
             {
                 name: currentAIConfigName.value,
@@ -95,9 +96,12 @@ const saveCurrentConfig =  () => {
         )
     } else {
         clientApi.confirm('已经存在一模一样或者重名的配置啦', '如果你一定要保存就保存吧', async () => {
+            let name = currentAIConfigName.value + "_" + dateNowChina()
+            configs.savedDescribes[name]={useAge:""}
+
             configs.savedConfigs.push(
                 {
-                    name: currentAIConfigName.value + "_" + dateNowChina(),
+                    name: name,
                     value: structuredClone(globalThis.siyuan.config.ai.openAI)
                 }
             )

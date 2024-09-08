@@ -13,7 +13,6 @@
                 <div class="b3-label__text">可以用来简单描述一下这个配置的功能</div>
                 <span class="fn__hr"></span>
                 <input v-model="plugin.data.configs.savedDescribes[configItem.name].useAge" class="b3-text-field fn__block" id="apiModel" >
-
             </div>
         </div>
         <div class="fn__flex b3-label config__item">
@@ -124,10 +123,12 @@
 import {plugin,clientApi} from 'runtime'
 import {inject} from 'vue'
 const appData =inject('appData')
+plugin.data.configs.savedConfigs.forEach(item=>{
+    plugin.data.configs.savedDescribes[item.name]=plugin.data.configs.savedDescribes[item.name]||{useAge:''}
+})
 const configItem = plugin.data.configs.savedConfigs.find(
     item=>{
         return item.name ===appData.configName
     }
 )
-console.log(configItem)
 </script>
